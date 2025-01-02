@@ -7,8 +7,9 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['8.2']
-    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+        php-versions: ['8.2', '8.3', '8.4']
+        symfony: ['6.3', '6.4', '7.0', '7.1', '7.2']
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }} with Symfony ${{ matrix.symfony }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,15 +20,34 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
           tools: composer:v2.5
-          extensions: swoole
+          extensions: swoole inotify
 
       - name: Get Composer Cache Directory
         id: composer-cache
         shell: bash
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
+      - name: Update Symfony version
+        run: |
+          rm -rf composer.lock vendor
+          composer require symfony/console:${{ matrix.symfony }} \
+                  symfony/dependency-injection:${{ matrix.symfony }}  \
+                  symfony/framework-bundle:${{ matrix.symfony }}  \
+                  symfony/http-kernel:${{ matrix.symfony }}  \
+                  symfony/runtime:${{ matrix.symfony }}  \
+                  symfony/http-foundation:${{ matrix.symfony }}  \
+                  --no-update --no-scripts
+
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+      - name: Show installed packages
+        run: composer show
+
+      - name: Show php info
+        run: | 
+          php -v
+          php -m
 
       - name: Cache dependencies
         uses: actions/cache@v3

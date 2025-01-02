@@ -1,0 +1,13 @@
+services:
+  swoole-8.2:
+    image: phpswoole/swoole:php8.2
+    volumes:
+      - ./:/app
+  swoole-8.3:
+    image: phpswoole/swoole:php8.3
+    volumes:
+      - ./:/app
+  swoole-8.4:
+    image: phpswoole/swoole:php8.4
+    volumes:
+      - ./:/app
