@@ -19,12 +19,12 @@
     ],
     "require": {
         "php": ">=8.2",
-        "symfony/console": "^6.3",
-        "symfony/dependency-injection": "^6.3",
-        "symfony/framework-bundle": "^6.3",
-        "symfony/http-foundation": "^6.3",
-        "symfony/http-kernel": "^6.3",
-        "symfony/runtime": "^6.3"
+        "symfony/console": "^6.3 | ^7.0",
+        "symfony/dependency-injection": "^6.3 | ^7.0",
+        "symfony/framework-bundle": "^6.3 | ^7.0",
+        "symfony/http-foundation": "^6.3 | ^7.0",
+        "symfony/http-kernel": "^6.3 | ^7.0",
+        "symfony/runtime": "^6.3 | ^7.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
@@ -51,6 +51,6 @@
     },
     "scripts": {
         "tests": "phpunit",
-        "analyze": "phpstan"
+        "analyze": "phpstan --memory-limit=-1"
     }
 }

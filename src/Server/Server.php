@@ -70,6 +70,7 @@ class Server implements ServerInterface
             phpPid: $this->options->shouldDaemonize() ? null : $this->pid,
             port: $this->server()->port,
             ip: $this->server()->host,
+            // @phpstan-ignore-next-line
             stats: new Stats((array) $this->server()->stats())
         );
     }

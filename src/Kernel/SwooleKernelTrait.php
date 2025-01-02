@@ -26,7 +26,7 @@ trait SwooleKernelTrait
     {
         parent::initializeContainer();
 
-        if ($this->server) {
+        if ($this->server && null !== $this->container) {
             $this->container->set(
                 'swoolefony.server',
                 $this->server,
@@ -34,7 +34,7 @@ trait SwooleKernelTrait
         }
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
         self::__construct(
             $this->environment,
